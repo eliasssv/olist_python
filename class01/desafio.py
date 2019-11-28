@@ -38,4 +38,4 @@ if (int(size) % 2 == 1):
         if (letterCounter + 1 > len(alphabet)):
             letterCounter = 0
 else:
-    print("Not odd number! EXIT!!!")    
+    print("Not odd number! EXIT!!!!")    
