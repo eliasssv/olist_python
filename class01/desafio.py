@@ -1,5 +1,5 @@
 size = int(input("Size of diamont (only odd numbers): "))
-if (int(size) % 2 == 1):
+if (size % 2 == 1):
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     letterCounter = 0
     x = 1
