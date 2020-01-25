@@ -2,15 +2,13 @@
     Classe Correntista
 '''
 import time;
-from banco.auditoria import Auditoria
 
 class Correntista:
-    def __init__(self, nome, cpf, saldo):
+    def __init__(self, nome, cpf, saldo, auditoria):
         self.__nome = nome
         self.__cpf = cpf
         self.__saldo = saldo
-        self.__auditoria = [Auditoria(cpf, time.time(), saldo, 'D')]
-        self.__idx = 0
+        auditoria.salvar_auditoria(self, cpf, 'D', saldo)
 
     def nome(self):
         return self.__nome
@@ -21,10 +19,7 @@ class Correntista:
     def saldo(self):
         return self.__saldo
     
-    def auditoria(self):
-        return self.__auditoria
-    
-    def depositar(self, valor):
+    def depositar(self, valor, auditoria):
         '''
         Faz um depósito na Conta
         Parameters:
@@ -39,11 +34,10 @@ class Correntista:
             raise ValueError("O valor deve ser maior que ZERO! Depósito não efetuado")
         else:   
             self.__saldo += valor
-            self.__auditoria.append(Auditoria(self.__cpf, time.time(), valor, 'D'))
-            self.__idx = len(self.__auditoria)
+            auditoria.salvar_auditoria(self.__cpf, 'D', valor)
             return f"Depósito de {valor} efetuado com sucesso. Saldo: R$ {self.__saldo}"
 
-    def sacar(self, valor):
+    def sacar(self, valor, auditoria):
         '''
         Faz um saque na Conta
         Parameters:
@@ -58,9 +52,8 @@ class Correntista:
         elif (valor > self.__saldo):
             raise ValueError(f"O valor do saque deve ser menor ou igual ao saldo (R$ {self.__saldo})! Saque não efetuado")
         else:
-            self.__saldo -= valor 
-            self.__auditoria.append(Auditoria(self.__cpf, time.time(), valor, 'S'))  
-            self.__idx = len(self.__auditoria)
+            self.__saldo -= valor  
+            auditoria.salvar_auditoria(self.__cpf, 'S', valor)
             return f"Saque de {valor} efetuado com sucesso. Saldo: R$ {self.__saldo}"  
 
 

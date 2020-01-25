@@ -3,23 +3,28 @@
 '''
 import time;
 class Auditoria:
-    def __init__(self, cpf, data_hora, valor, tipo):
-        self.__cpf = cpf
-        self.__data_hora = data_hora
-        self.__valor = valor
-        self.__tipo = tipo
+    def __init__(self):
+        self.__lista_auditoria = []
 
-    def cpf(self):
-        return self.__cpf
+    def auditar(self, cpf, tipo, valor):
+        self.__lista_auditoria.append({
+            'cpf': cpf,
+            'tipo': tipo,
+            'valor': valor,
+            'data': time.time()
+        })
 
-    def data_hora(self):
-        return self.__data_hora
+    def listar_auditoria(self, cpf = ''):
+        
+        if (cpf == ''):
+            return self.__lista_auditoria
 
-    def valor(self):
-        return self.__valor
-
-    def tipo(self):
-        return self.__tipo
+        retorno = []
+        for a in self.__lista_auditoria:
+            if (a['cpf'] == cpf):
+                retorno.append(a)
+        return retorno
+    
 
     def __str__(self):
         '''
@@ -29,4 +34,8 @@ class Auditoria:
         Returns: 
         string: dados da conta
         '''
-        return f"CPF: {self.__cpf}\n Data/Hora: {self.__data_hora}\n Valor R$ {self.__valor}\n Tipo {self.__tipo}"
+        retorno = ''
+        for a in self.__lista_auditoria:
+            retorno += f"CPF: {self.__cpf}\n Data/Hora: {self.__data_hora}\n Valor R$ {self.__valor}\n Tipo {self.__tipo}"
+        
+        return retorno
